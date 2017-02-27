@@ -13,7 +13,7 @@
 
 2. DB를 준비하기 위해 mysql 설치 후 root계정으로 로그인. writingdb를 만들고 writingSQL.sql 파일로 table과 기본적인 db 내용 입력 
 
-3. server폴더에서 node server.js로 서버실행
+3. server폴더에서 npm install 후 node server.js로 서버실행
 
 4. cmd에서 client폴더 내부의 위치로 들어가서 fuse preview 실행
 
