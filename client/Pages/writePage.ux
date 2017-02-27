@@ -1,0 +1,57 @@
+<Page ux:Class="writePage" ClipToBounds="true">
+	<Router ux:Dependency="router" />
+	<JavaScript File="../js/WritePage.js" />
+
+	<!--Back버튼 Class-->
+	<Image ux:Class="BackwardIcon" Width="10" Height="13" File="../Assets/backward@4x.png"/>
+	<Panel ux:Class="BackButton" Width="40" Height="40" HitTestMode="LocalBounds">
+		<BackwardIcon Alignment="Center" />
+	</Panel>
+
+	<DockPanel Background="#FAFBDA">
+		
+		<!--SubmitButton버튼 Class-->
+		<Panel ux:Class="SubmitButton" HitTestMode="LocalBounds" Margin="1" Color="#fff" Width="150" Height="50" >
+		    <string ux:Property="Text" />
+		    <Text Value="{ReadProperty Text}" Font="NanumMyeongjo" Color="#000" Alignment="Center" Margin="30,15" />
+		</Panel>
+
+		<!--header-->
+		<Panel Height="40" Color="#FAFBDA" Dock="Top">
+			<BackButton Alignment="CenterLeft" Clicked="{goBack}"/>
+			<Each Items="{contentOne}">
+				<Text FontSize="23" Alignment="Center" Color="#000" Font="NanumMyeongjo" Value="{SUBJECT}"/>
+			</Each>
+			<SubmitButton Width="75" Height="46" Color="#FAFBDA" Text="완료" Alignment="Right" Clicked="{write}">
+				
+				<!--submit 후 textview의 글을 지우고 homePage로 이동-->
+				<Clicked>
+					<Set messageTextView.Value="{Write text}"/>
+					<JavaScript>
+						router.push("home");
+					</JavaScript>
+				</Clicked>
+			</SubmitButton>
+		</Panel>
+
+		<!--텍스트 입력창-->
+		<TextView ux:Name="messageTextView" Font="NanumMyeongjo" CaretColor="#0004" TextColor="#000a" Height="600" TextWrapping="Wrap" Margin="10" AutoCapitalizationHint="Sentences" AutoCorrectHint="Enabled" Value="{Write text}">
+
+			<!--텍스트 입력창에 focus 되지 않았을 때 글씨 표시-->
+			<Text ux:Class="MutedText" FontSize="18" Color="#fffa" Font="NanumMyeongjo" />
+			<WhileNotFocused>
+				<WhileString Value="{ReadProperty messageTextView.Value}" MaxLength="0">
+					<MutedText ux:Name="messagePlaceholder" Color="#0003" Alignment="TopCenter">
+						당신의 생각을 들려주세요.
+						<AddingAnimation>
+							<Change messagePlaceholder.Opacity="0" Duration="0.2" />
+						</AddingAnimation>
+						<RemovingAnimation>
+							<Change messagePlaceholder.Opacity="0" Duration="0.2" />
+						</RemovingAnimation>
+					</MutedText>
+				</WhileString>
+			</WhileNotFocused>
+		</TextView>
+	</DockPanel>
+</Page>

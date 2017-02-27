@@ -1,0 +1,18 @@
+<App>
+	<Router ux:Name="router" />
+	<DockPanel>
+		<!--페이지 이동을 위한 Navigator-->
+		<Navigator DefaultPath="home">
+			<!--메인 페이지-->
+			<homePage ux:Name="home" router="router"/> 
+			<!--글 쓰기 페이지-->
+			<writePage ux:Name="write" router="router" />
+			<!--아홉 편의 모음 페이지-->
+			<ninePage ux:Name="nine" router="router" />
+			<!--글감 목록 페이지-->
+			<subsPage ux:Name="subs" router="router" />
+			<!--글감 목록에서 글감 클릭 시 글감에 대한 글들이 나오는 페이지-->
+			<writingsPage ux:Name="writings" router="router" />
+		</Navigator>
+	</DockPanel>
+</App>

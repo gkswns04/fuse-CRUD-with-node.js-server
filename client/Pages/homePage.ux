@@ -1,0 +1,127 @@
+<Page ux:Class="homePage" ClipToBounds="true">
+	<Router ux:Dependency="router" />
+	<JavaScript File="../js/HomePage.js" />
+	<Font File="../Assets/fonts/NanumMyeongjo.ttf" ux:Global="NanumMyeongjo" />
+
+
+	<EdgeNavigator>
+		<!--sidebar-->
+		<Panel ux:Name="sidebar" Edge="Left" Width="100%" Margin="0,0,56,0" Background="#FAFBDA">
+			<StackPanel>
+				<Panel Height="60" Margin="0,50,0,0" Clicked="{clickHandler}">
+					<BodyText FontSize="18" Margin="20" TextAlignment="Center" >
+						<Image File="../Assets/write2.png" Margin="20,0" Width="30" Height="30" Alignment="Left"/>
+						글쓰기
+					</BodyText>
+					<Clicked>
+						<NavigateToggle Target="sidebar" />
+					</Clicked>
+				</Panel>
+			    <Panel Height="60" Clicked="{clickHandler}">
+					<BodyText FontSize="18" Margin="20" TextAlignment="Center">
+						<Image File="../Assets/writings.png" Margin="20,0" Width="30" Height="30" Alignment="Left"/>
+						글감 목록
+					</BodyText>
+					<Clicked>
+						<NavigateToggle Target="sidebar" />
+						<JavaScript>
+							router.push("subs");
+						</JavaScript>
+					</Clicked>
+			    </Panel>
+			    
+			    <Rectangle ux:Class="HorizontalLine" Height="1" Color="Gray" />
+			    <HorizontalLine Width="250" Margin="0,20"/>
+			</StackPanel>
+		
+			<Shadow ux:Name="shadow" Angle="180" Distance="8" Size="16" Color="#0000" />
+			<ActivatingAnimation>
+				<Change shadow.Color="#0004" />
+				<Change sidebarFade.Opacity="1" />
+			</ActivatingAnimation>
+		</Panel>
+
+		<DockPanel Color="#FAFBDA">
+			<!--sidebar 활성시 fade효과-->
+			<Rectangle ux:Name="sidebarFade" Layer="Overlay" Color="#0005" Opacity="0" HitTestMode="None">
+				<Panel>
+					<Rectangle Row="0" Column="0" Alignment="Bottom" ColumnSpan="2" Height="1" Fill="#000"/>
+				</Panel>	
+			</Rectangle>
+			
+			<!--header-->
+			<StackPanel Dock="Top" Color="#FAFBDA">
+				<Panel Height="56">
+					<Hamburger Alignment="Left">
+						<Clicked>
+							<NavigateToggle Target="sidebar" />
+						</Clicked>
+					</Hamburger>
+				</Panel>
+			</StackPanel>
+			
+			<!--Body-->
+			<ClientPanel>
+				<Panel>
+					<Grid Rows="1*,60">
+						<PageControl ux:Name="pageControl" IsRouterOutlet="false" Active="{currentPage}">
+							<!--페이지 1-->
+							<Panel ux:Name="page1" Alignment="Center">
+								<Text ux:Class="BodyText" Font="NanumMyeongjo" FontSize="30" Color="#000" TextWrapping="Wrap" TextAlignment="Center" />
+								<StackPanel>
+									<Each Items="{contentOne}">
+										<BodyText Value="{SUBJECT}" Margin="0,100"/>
+									</Each>
+									<Image File="../Assets/write2.png" Margin="0,100,0,0" Width="50" Height="50" Clicked="{gotoWrite}"/>
+								</StackPanel>
+							</Panel>
+
+							<!--페이지 2-->
+							<Panel Alignment="Center" Padding="10">
+								<StackPanel>
+									<Each Items="{contentOne}">
+										<BodyText Margin="50" FontSize="16" Font="NanumMyeongjo" Value="{CONTENT}"/>
+										<BodyText FontSize="16" Font="NanumMyeongjo" Value="{WRITER}"/>
+									</Each>
+								</StackPanel>
+							</Panel>
+
+							<!--페이지 3-->
+							<Panel>
+								<StackPanel Alignment="Center">
+									<Image File="../Assets/book.png" Width="60" Height="40" Margin="0,50,0,60"/>
+									<BodyText Font="NanumMyeongjo" FontSize="20" TextAlignment="Center">아홉 편의 모음
+									</BodyText>
+	
+									<Panel ux:Class="MyButton" HitTestMode="LocalBounds" Color="#fff" Width="100" Height="35">
+									    <string ux:Property="Text" />
+									    <Text Value="{ReadProperty Text}" Font="NanumMyeongjo" Color="#000" Alignment="Center" FontSize="13"/>
+									</Panel>
+									<Rectangle Height="37" Margin="0,70" Width="102" Color="#000">
+										<MyButton Text="모음 보기"  Clicked="{nineWritings}"/>
+									</Rectangle>
+								</StackPanel>
+							</Panel>
+						</PageControl>
+						
+						<!--homePgae에서 옆으로 페이지 이동 시 현재위치 화면아래 점으로 표시-->
+						<Panel>
+							<PageIndicator ux:Name="pageIndicator" Navigation="pageControl" Dock="Bottom" Alignment="TopCenter">
+								<Circle ux:Template="Dot" ux:Name="dotFac" Color="#fff" Margin="5" Width="10" Height="20">
+									<Stroke Width="1">
+								        <SolidColor Color="#000" />
+								    </Stroke>
+									
+									<ActivatingAnimation>
+										<Scale Factor="1.1"/>
+										<Change dotFac.Color="#000" />
+									</ActivatingAnimation>
+								</Circle>
+							</PageIndicator>
+						</Panel>
+					</Grid>
+				</Panel>
+			</ClientPanel>
+		</DockPanel>
+	</EdgeNavigator>
+</Page>

@@ -1,0 +1,39 @@
+<Page ux:Class="writingsPage" ClipToBounds="true">
+	<Router ux:Dependency="router" />
+	<JavaScript File="../js/WritingsPage.js" />
+	
+	<DockPanel Background="#FAFBDA">
+		<!--header (이 페이지에서 back버튼을 5번눌러야 뒤로 가지는 버그가 있습니다.)-->
+		<Panel Height="40" Color="#FAFBDA" Dock="Top">
+			<BackButton Alignment="CenterLeft" Clicked="{goBack}"/>
+		</Panel>
+
+		<ScrollView LayoutMode="PreserveVisual">
+			<StackPanel Alignment="Top" Padding="10">
+				<!--첫 번째 글(모양을 다르게 하기 위해 나눴습니다.)-->
+				<StackPanel>
+					<Each Items="{writingsFirst}">
+						<BodyText FontSize="22" Value="{SUBJECT}" Margin="0,30"/>
+						<BodyText Margin="30,30" FontSize="16" Font="NanumMyeongjo" Value="{CONTENT}"/>
+						<BodyText Margin="30,10,30,30" FontSize="16" Font="NanumMyeongjo" Value="{WRITER}"/>
+					</Each>
+					<Image File="../Assets/write2.png" Width="50" Height="50" Margin="0,20,0,50" Clicked="{gotoWrite}"/>
+				</StackPanel>
+
+				<!--두 번째 글부터 끝까지-->
+				<Each Items="{contentAll}">
+					<Rectangle Margin="5,5" Padding="40,30" Clicked="{gotoWritings}">
+				        <Stroke Width="1" Color="Gray" />
+				        <StackPanel>
+				        	<BodyText FontSize="22" Margin="0,10,0,30" Value="{SUBJECT}"></BodyText>
+				        	<BodyText TextAlignment="Center" FontSize="16" Alignment="Center" Value="{CONTENT}"></BodyText>
+				        	<BodyText FontSize="13" Value="{WRITER}" Margin="0,30,0,0"/>
+				        	<BodyText FontSize="13" Value="{CREATEDDATE}" Margin="0,10,0,0"/>
+				    	</StackPanel>
+				    </Rectangle>
+		    	</Each>	
+			</StackPanel>
+		</ScrollView>
+	</DockPanel>
+
+</Page>
