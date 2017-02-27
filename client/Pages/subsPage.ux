@@ -1,0 +1,79 @@
+<Page ux:Class="subsPage" ClipToBounds="true">
+	<Router ux:Dependency="router" />
+	<JavaScript File="../js/SubsPage.js" />
+
+	<EdgeNavigator>
+		<!--sidebar-->
+		<Panel ux:Name="sidebar" Edge="Left" Width="100%" Margin="0,0,56,0" Background="#FAFBDA">
+			<StackPanel>
+				<Panel Height="60" Margin="0,50,0,0">
+					<BodyText FontSize="18" Margin="20" TextAlignment="Center">
+					<Image File="../Assets/write2.png" Margin="20,0" Width="30" Height="30" Alignment="Left"/>
+						글쓰기
+					</BodyText>
+					<Clicked>
+						<NavigateToggle Target="sidebar" />
+						<JavaScript>
+							router.push("home");
+						</JavaScript>
+					</Clicked>
+				</Panel>
+			    <Panel Height="60" Clicked="{gotoSubs}">
+					<BodyText FontSize="18" Margin="20" TextAlignment="Center">
+						<Image File="../Assets/writings.png" Margin="20,0" Width="30" Height="30" Alignment="Left"/>
+						글감 목록
+					</BodyText>
+					<Clicked>
+						<NavigateToggle Target="sidebar" />
+					</Clicked>
+			    </Panel>
+			    
+			    <HorizontalLine Width="250" Margin="0,20"/>
+			</StackPanel>
+		
+			<Shadow ux:Name="shadow" Angle="180" Distance="8" Size="16" Color="#0000" />
+			<ActivatingAnimation>
+				<Change shadow.Color="#0004" />
+				<Change sidebarFade.Opacity="1" />
+			</ActivatingAnimation>
+		</Panel>
+
+	
+		<DockPanel Background="#FAFBDA">
+			<!--sidebar 활성시 fade효과-->
+			<Rectangle ux:Name="sidebarFade" Layer="Overlay" Color="#0005" Opacity="0" HitTestMode="None">
+				<Panel>
+					<Rectangle Row="0" Column="0" Alignment="Bottom" ColumnSpan="2" Height="1" Fill="#000"/>
+				</Panel>	
+			</Rectangle>
+
+			<!--header-->
+			<Panel Height="40" Color="#FAFBDA" Dock="Top">
+				<Panel Height="56">
+					<Hamburger Alignment="Left">
+						<Clicked>
+							<NavigateToggle Target="sidebar" />
+						</Clicked>
+					</Hamburger>
+				</Panel>
+			</Panel>
+
+			<!--body (글감 목록)-->
+			<ScrollView LayoutMode="PreserveVisual">
+				<StackPanel>
+					<Each Items="{sub}" >
+						<Rectangle Height="60" Margin="10,5" Padding="0,20">
+			        		<Stroke Width="1" Color="Gray" />
+			        		<BodyText Name="subject" TextAlignment="Left" FontSize="18" Alignment="Left" Margin="10,0" Value="{SUBJECT}"/>
+				        	<Button Width="335" Height="50" Margin="10,0"/>
+							
+							<Clicked>
+								<Callback Handler="{search}"/>
+							</Clicked> 
+				    	</Rectangle>
+					</Each>
+				</StackPanel>
+			</ScrollView>
+		</DockPanel>
+	</EdgeNavigator>
+</Page>
